@@ -1,6 +1,6 @@
 from typing import List
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import networkx as nx
 
 
@@ -28,6 +28,11 @@ def find_trading_cycle(preferences: List[List[int]]) -> List[int]:
 
 
 def top_trading_cycles(preferences: List[List[int]]):
+    """
+
+    :param preferences:
+    :return:
+    """
     res = [-1] * len(preferences)
     persons_with_house = 0
     while len(preferences) > persons_with_house:
@@ -61,4 +66,21 @@ if __name__ == '__main__':
     #     [3, 0, 2, 1],
     #     [2, 3, 0, 1],
     # ]
-    print(top_trading_cycles(prefs))
+
+    p = [
+        [0, 1, 2],
+        [0, 1, 2],
+        [0, 1, 2],
+    ]
+    p = [
+        [1, 0],
+        [0, 1],
+    ]
+    p = [
+        [1, 2, 3, 4, 0, ],
+        [2, 3, 4, 0, 1, ],
+        [3, 4, 0, 1, 2, ],
+        [4, 0, 1, 2, 3, ],
+        [0, 1, 2, 3, 4, ],
+    ]
+    print(top_trading_cycles(p))
