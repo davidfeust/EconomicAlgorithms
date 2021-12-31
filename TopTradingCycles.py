@@ -1,10 +1,14 @@
+import doctest
 from typing import List
 
-# import matplotlib.pyplot as plt
 import networkx as nx
 
 
 def find_trading_cycle(preferences: List[List[int]]) -> List[int]:
+    """
+    :param preferences: preferences[i] is the preferences of person i
+    :return: cycle in the graph of trading
+    """
     G = nx.DiGraph()
 
     for i, pref in enumerate(preferences):
@@ -29,9 +33,32 @@ def find_trading_cycle(preferences: List[List[int]]) -> List[int]:
 
 def top_trading_cycles(preferences: List[List[int]]):
     """
+    Returns trade of house and persons
+    :param preferences: preferences[i] is the preferences of person i
+    :return: list of trade, whene res[i] is the house of peron i
 
-    :param preferences:
-    :return:
+    >>> # simple trade
+    >>> p0 = [[1, 0], [0, 1]]
+    >>> top_trading_cycles(p0)
+    [1, 0]
+
+    >>> # retention of ownership
+    >>> p1 = [[0, 1, 2], [0, 1, 2], [0, 1, 2]]
+    >>> top_trading_cycles(p1)
+    [0, 1, 2]
+
+    >>> p2 = [[2, 0, 1, 3], [0, 3, 1, 2], [3, 0, 2, 1], [2, 3, 0, 1]]
+    >>> top_trading_cycles(p2)
+    [0, 1, 3, 2]
+
+    >>> p3 = [[1, 2, 3, 4, 0], [2, 3, 4, 0, 1], [3, 4, 0, 1, 2], [4, 0, 1, 2, 3], [0, 1, 2, 3, 4]]
+    >>> top_trading_cycles(p3)
+    [1, 2, 3, 4, 0]
+
+    >>> p4 = [[2, 0, 1, 3], [0, 3, 1, 2], [0, 3, 2, 1], [2, 3, 0, 1]]
+    >>> top_trading_cycles(p4)
+    [2, 1, 0, 3]
+
     """
     res = [-1] * len(preferences)
     persons_with_house = 0
@@ -54,33 +81,5 @@ def top_trading_cycles(preferences: List[List[int]]):
 
 
 if __name__ == '__main__':
-    prefs = [
-        [2, 0, 1, 3],
-        [0, 3, 1, 2],
-        [0, 3, 2, 1],
-        [2, 3, 0, 1],
-    ]
-    # prefs = [
-    #     [2, 0, 1, 3],
-    #     [0, 3, 1, 2],
-    #     [3, 0, 2, 1],
-    #     [2, 3, 0, 1],
-    # ]
-
-    p = [
-        [0, 1, 2],
-        [0, 1, 2],
-        [0, 1, 2],
-    ]
-    p = [
-        [1, 0],
-        [0, 1],
-    ]
-    p = [
-        [1, 2, 3, 4, 0, ],
-        [2, 3, 4, 0, 1, ],
-        [3, 4, 0, 1, 2, ],
-        [4, 0, 1, 2, 3, ],
-        [0, 1, 2, 3, 4, ],
-    ]
-    print(top_trading_cycles(p))
+    (failures, tests) = doctest.testmod(report=True)
+    print("{} failures, {} tests".format(failures, tests))
